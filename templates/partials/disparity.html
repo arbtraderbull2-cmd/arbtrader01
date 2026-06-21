@@ -1,0 +1,180 @@
+<!-- ── SCREEN 1: DISPARITY ── -->
+<div class="page active" id="pg-disparity">
+
+  <!-- No account warning -->
+  <div class="disp-no-acc" id="disp-no-acc">
+    ← Select and connect an account in the sidebar to see live prices
+  </div>
+
+  <!-- Metal tab bar (hidden until account connected) -->
+  <div id="disp-content" style="display:none">
+
+    <div class="metal-tabs">
+      <div class="metal-tab active" onclick="setMetal('gold', this)">
+        <span class="sym">Au</span>
+        Gold
+        <span class="metal-tab-disp" id="gold-disp-badge">—</span>
+      </div>
+      <div class="metal-tab" onclick="setMetal('silver', this)">
+        <span class="sym ag">Ag</span>
+        Silver
+        <span class="metal-tab-disp" id="silver-disp-badge">—</span>
+      </div>
+    </div>
+
+    <!-- ══ GOLD PANEL ══ -->
+    <div class="metal-panel" id="panel-gold">
+
+      <!-- Symbol selector row -->
+      <div class="disp-sym-row">
+        <div class="disp-sym-group">
+          <label>Symbol</label>
+          <select id="sym-gold-select" onchange="dispOnSymbolChange('GOLD')">
+            <option value="">Loading…</option>
+          </select>
+        </div>
+        <div class="disp-sym-status" id="gold-sym-status"></div>
+        <div class="disp-sym-updated">Updated <span id="gold-updated">—</span></div>
+      </div>
+
+      <div class="price-row">
+        <div class="pcard">
+          <div class="pcard-top">
+            <span class="pcard-broker">COMEX</span>
+            <div class="dot" id="gold-comex-dot" style="background:#d1d5db"></div>
+          </div>
+          <div class="pcard-market">USD / oz</div>
+          <div class="ba-row">
+            <div class="ba-side"><div class="ba-lbl">Bid</div><div class="ba-val bid" id="gold-comex-bid">—</div></div>
+            <div class="ba-side"><div class="ba-lbl">Ask</div><div class="ba-val ask" id="gold-comex-ask">—</div></div>
+          </div>
+        </div>
+
+        <div class="pcard disp-center">
+          <div class="dc-lbl">Disparity</div>
+          <div class="dc-val" id="gold-disparity">—</div>
+          <div class="dc-sub">COMEX (converted) − MCX</div>
+        </div>
+
+        <div class="pcard">
+          <div class="pcard-top">
+            <span class="pcard-broker">MCX converted</span>
+            <div class="dot" id="gold-mcx-dot" style="background:#d1d5db"></div>
+          </div>
+          <div class="pcard-market">INR / 10g (bank rate)</div>
+          <div class="ba-row">
+            <div class="ba-side"><div class="ba-lbl">Bank rate</div><div class="ba-val ask" id="gold-bank-rate-disp">—</div></div>
+            <div class="ba-side"><div class="ba-lbl">MCX ask</div><div class="ba-val bid" id="gold-mcx-ask-disp">—</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="costing-grid">
+        <div class="ccard">
+          <div class="ccard-title">Gold costing <span class="cbadge">per 10g</span></div>
+          <div class="crow"><span class="crow-lbl">COMEX ask (USD/oz)</span><span class="crow-val" id="gc-comex-price">—</span></div>
+          <div class="crow"><span class="crow-lbl">Multiplier (oz→10g)</span><span class="crow-val" id="gc-multiplier">0.3215</span></div>
+          <div class="crow"><span class="crow-lbl">USD / INR</span><span class="crow-val" id="gc-usdinr">—</span></div>
+          <div class="crow">
+            <span class="crow-lbl">Custom duty (₹) <span class="editable-dot">●</span></span>
+            <div class="crow-inp"><input type="number" id="gc-duty" value="0" oninput="dispRecalc('gold')" /></div>
+          </div>
+          <div class="crow">
+            <span class="crow-lbl">Premium buy (%) <span class="editable-dot">●</span></span>
+            <div class="crow-inp"><input type="number" id="gc-prem-buy" value="0" step="0.01" oninput="dispRecalc('gold')" /></div>
+          </div>
+          <div class="crow">
+            <span class="crow-lbl">Premium sell (%) <span class="editable-dot">●</span></span>
+            <div class="crow-inp"><input type="number" id="gc-prem-sell" value="0" step="0.01" oninput="dispRecalc('gold')" /></div>
+          </div>
+          <div class="crow">
+            <span class="crow-lbl">Interbank spread (₹) <span class="editable-dot">●</span></span>
+            <div class="crow-inp"><input type="number" id="gc-interbank" value="0" step="0.01" oninput="dispRecalc('gold')" /></div>
+          </div>
+          <div class="ccard-divider"></div>
+          <div class="crow result"><span class="crow-lbl">Bank rate (10g)</span><span class="crow-val result-blue" id="gc-bank-rate">—</span></div>
+          <div class="crow result"><span class="crow-lbl">MCX ask</span><span class="crow-val" id="gc-mcx-rate">—</span></div>
+          <div class="crow result"><span class="crow-lbl">Difference</span><span class="diff-val" id="gc-diff">—</span></div>
+          <button class="save-btn" onclick="dispSaveParams('gold')">Save parameters</button>
+        </div>
+      </div>
+
+    </div><!-- /#panel-gold -->
+
+    <!-- ══ SILVER PANEL ══ -->
+    <div class="metal-panel" id="panel-silver" style="display:none">
+
+      <div class="disp-sym-row">
+        <div class="disp-sym-group">
+          <label>Symbol</label>
+          <select id="sym-silver-select" onchange="dispOnSymbolChange('silver')">
+            <option value="">Loading…</option>
+          </select>
+        </div>
+        <div class="disp-sym-status" id="silver-sym-status"></div>
+        <div class="disp-sym-updated">Updated <span id="silver-updated">—</span></div>
+      </div>
+
+      <div class="price-row">
+        <div class="pcard">
+          <div class="pcard-top">
+            <span class="pcard-broker">COMEX</span>
+            <div class="dot" id="silver-comex-dot" style="background:#d1d5db"></div>
+          </div>
+          <div class="pcard-market">USD / oz</div>
+          <div class="ba-row">
+            <div class="ba-side"><div class="ba-lbl">Bid</div><div class="ba-val bid" id="silver-comex-bid">—</div></div>
+            <div class="ba-side"><div class="ba-lbl">Ask</div><div class="ba-val ask" id="silver-comex-ask">—</div></div>
+          </div>
+        </div>
+
+        <div class="pcard disp-center">
+          <div class="dc-lbl">Disparity</div>
+          <div class="dc-val" id="silver-disparity">—</div>
+          <div class="dc-sub">COMEX (converted) − MCX</div>
+        </div>
+
+        <div class="pcard">
+          <div class="pcard-top">
+            <span class="pcard-broker">MCX converted</span>
+            <div class="dot" id="silver-mcx-dot" style="background:#d1d5db"></div>
+          </div>
+          <div class="pcard-market">INR / kg (bank rate)</div>
+          <div class="ba-row">
+            <div class="ba-side"><div class="ba-lbl">Bank rate</div><div class="ba-val ask" id="silver-bank-rate-disp">—</div></div>
+            <div class="ba-side"><div class="ba-lbl">MCX ask</div><div class="ba-val bid" id="silver-mcx-ask-disp">—</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="costing-grid">
+        <div class="ccard">
+          <div class="ccard-title">Silver costing <span class="cbadge">per kg</span></div>
+          <div class="crow"><span class="crow-lbl">COMEX ask (USD/oz)</span><span class="crow-val" id="sc-comex-price">—</span></div>
+          <div class="crow"><span class="crow-lbl">Multiplier (oz→kg)</span><span class="crow-val" id="sc-multiplier">32.1507</span></div>
+          <div class="crow"><span class="crow-lbl">USD / INR</span><span class="crow-val" id="sc-usdinr">—</span></div>
+          <div class="crow">
+            <span class="crow-lbl">Custom duty (₹) <span class="editable-dot">●</span></span>
+            <div class="crow-inp"><input type="number" id="sc-duty" value="0" oninput="dispRecalc('silver')" /></div>
+          </div>
+          <div class="crow">
+            <span class="crow-lbl">Premium buy (%) <span class="editable-dot">●</span></span>
+            <div class="crow-inp"><input type="number" id="sc-prem-buy" value="0" step="0.01" oninput="dispRecalc('silver')" /></div>
+          </div>
+          <div class="crow">
+            <span class="crow-lbl">Premium sell (%) <span class="editable-dot">●</span></span>
+            <div class="crow-inp"><input type="number" id="sc-prem-sell" value="0" step="0.01" oninput="dispRecalc('silver')" /></div>
+          </div>
+          <div class="ccard-divider"></div>
+          <div class="crow result"><span class="crow-lbl">Bank rate (kg)</span><span class="crow-val result-blue" id="sc-bank-rate">—</span></div>
+          <div class="crow result"><span class="crow-lbl">MCX ask</span><span class="crow-val" id="sc-mcx-rate">—</span></div>
+          <div class="crow result"><span class="crow-lbl">Difference</span><span class="diff-val" id="sc-diff">—</span></div>
+          <button class="save-btn" onclick="dispSaveParams('silver')">Save parameters</button>
+        </div>
+      </div>
+
+    </div><!-- /#panel-silver -->
+
+  </div><!-- /#disp-content -->
+
+</div><!-- /#pg-disparity -->

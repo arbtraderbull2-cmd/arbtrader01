@@ -1,0 +1,91 @@
+<!-- ── SCREEN 4: SUMMARY ── -->
+<div class="page" id="pg-limits">
+
+  <div class="sum-topbar">
+    <div class="sum-acc-badge" id="sum-acc-badge">No account selected</div>
+    <div class="sum-period-btns">
+      <button class="sum-period active" onclick="sumSetPeriod('D',this)">Day</button>
+      <button class="sum-period"        onclick="sumSetPeriod('W',this)">Week</button>
+      <button class="sum-period"        onclick="sumSetPeriod('M',this)">Month</button>
+      <button class="sum-period"        onclick="sumSetPeriod('ALL',this)">All</button>
+    </div>
+    <button class="sum-refresh-btn" onclick="sumRefresh()">↻ Refresh</button>
+  </div>
+
+  <div class="sum-placeholder" id="sum-placeholder">No account selected — connect one in the sidebar</div>
+
+  <div id="sum-content" style="display:none">
+
+    <!-- Account standing -->
+    <div class="sum-account-row" id="sum-account-row"></div>
+
+    <!-- P&L hero -->
+    <div class="sum-hero-grid">
+      <div class="sum-hero-card">
+        <div class="shc-lbl">Net P&L</div>
+        <div class="shc-val" id="sum-net-pnl">—</div>
+        <div class="shc-sub" id="sum-period-label">All time</div>
+      </div>
+      <div class="sum-hero-card">
+        <div class="shc-lbl">Closed P&L</div>
+        <div class="shc-val" id="sum-closed-pnl">—</div>
+        <div class="shc-sub" id="sum-trade-count">0 trades</div>
+      </div>
+      <div class="sum-hero-card">
+        <div class="shc-lbl">Open P&L</div>
+        <div class="shc-val" id="sum-open-pnl">—</div>
+        <div class="shc-sub">Live positions</div>
+      </div>
+      <div class="sum-hero-card neutral">
+        <div class="shc-lbl">Commission</div>
+        <div class="shc-val neutral" id="sum-commission">—</div>
+        <div class="shc-sub" id="sum-swap">Swap: —</div>
+      </div>
+    </div>
+
+    <!-- P&L by symbol -->
+    <div class="sum-section">
+      <div class="sum-section-title">P&L by Symbol</div>
+      <div class="sum-placeholder" id="sum-sym-placeholder">No closed trades in this period</div>
+      <div class="pnl-table-wrap" id="sum-sym-wrap" style="display:none">
+        <table class="pnl-table">
+          <thead>
+            <tr>
+              <th>Symbol</th>
+              <th>Trades</th>
+              <th>P&L</th>
+              <th>Commission</th>
+              <th>Swap</th>
+              <th>Avg P&L / trade</th>
+            </tr>
+          </thead>
+          <tbody id="sum-sym-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Net exposure -->
+    <div class="sum-section">
+      <div class="sum-section-title">Net Exposure (Open Positions)</div>
+      <div class="sum-placeholder" id="sum-exp-placeholder">No open positions</div>
+      <div class="pnl-table-wrap" id="sum-exp-wrap" style="display:none">
+        <table class="pnl-table">
+          <thead>
+            <tr>
+              <th>Symbol</th>
+              <th>Long (lots)</th>
+              <th>Short (lots)</th>
+              <th>Net</th>
+              <th>Open P&L</th>
+            </tr>
+          </thead>
+          <tbody id="sum-exp-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /#sum-content -->
+
+  <div class="pnl-action-status" id="sum-status"></div>
+
+</div><!-- /#pg-limits -->

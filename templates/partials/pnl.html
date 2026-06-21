@@ -1,0 +1,92 @@
+<!-- ── SCREEN 3: LIVE P&L ── -->
+<div class="page" id="pg-pnl">
+
+  <!-- Topbar: active account + refresh controls -->
+  <div class="pnl-topbar">
+    <div class="pnl-acc-badge" id="pnl-acc-badge">No account selected</div>
+    <div class="pnl-topbar-right">
+      <div class="pnl-last-update" id="pnl-last-update">—</div>
+      <button class="pnl-refresh-btn" onclick="pnlRefresh()">↻ Refresh</button>
+      <label class="pnl-auto-lbl">
+        <input type="checkbox" id="pnl-auto" onchange="pnlToggleAuto(this)" />
+        Auto (5s)
+      </label>
+    </div>
+  </div>
+
+  <!-- Summary hero -->
+  <div class="pnl-hero">
+    <div class="pnl-hero-left">
+      <div class="ph-lbl">Floating P&amp;L</div>
+      <div class="ph-val" id="pnl-total">—</div>
+    </div>
+    <div class="pnl-hero-stats">
+      <div class="ds-item">
+        <div class="ds-lbl">Open positions</div>
+        <div class="ds-val" id="pnl-pos-count">—</div>
+      </div>
+      <div class="ds-item">
+        <div class="ds-lbl">Pending orders</div>
+        <div class="ds-val" id="pnl-ord-count">—</div>
+      </div>
+      <div class="ds-item">
+        <div class="ds-lbl">Total swap</div>
+        <div class="ds-val" id="pnl-swap">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Open Positions -->
+  <div class="pnl-section">
+    <div class="pnl-section-header">
+      <span class="pnl-section-title">Open Positions</span>
+      <div class="pnl-section-actions">
+        <button class="pnl-sel-btn" onclick="pnlSelectAll('pos')">Select all</button>
+        <button class="pnl-sel-btn" onclick="pnlClearSel('pos')">Clear</button>
+        <button class="pnl-sq-btn" id="pnl-sq-btn" onclick="pnlSquareOff()" disabled>Square off selected</button>
+      </div>
+    </div>
+    <div class="pnl-placeholder" id="pnl-pos-placeholder">No account selected</div>
+    <div class="pnl-table-wrap" id="pnl-pos-table-wrap" style="display:none">
+      <table class="pnl-table">
+        <thead>
+          <tr>
+            <th class="pnl-th-check"><input type="checkbox" id="pnl-check-all-pos" onchange="pnlToggleAllPos(this)"/></th>
+            <th>Ticket</th><th>Symbol</th><th>Type</th><th>Volume</th>
+            <th>Open</th><th>Current</th><th>SL</th><th>TP</th>
+            <th>Swap</th><th>P&amp;L</th><th>Comment</th>
+          </tr>
+        </thead>
+        <tbody id="pnl-pos-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Pending Orders -->
+  <div class="pnl-section">
+    <div class="pnl-section-header">
+      <span class="pnl-section-title">Pending Orders</span>
+      <div class="pnl-section-actions">
+        <button class="pnl-sel-btn" onclick="pnlSelectAll('ord')">Select all</button>
+        <button class="pnl-sel-btn" onclick="pnlClearSel('ord')">Clear</button>
+        <button class="pnl-cancel-btn" id="pnl-cancel-btn" onclick="pnlCancelOrders()" disabled>Cancel selected</button>
+      </div>
+    </div>
+    <div class="pnl-placeholder" id="pnl-ord-placeholder">No account selected</div>
+    <div class="pnl-table-wrap" id="pnl-ord-table-wrap" style="display:none">
+      <table class="pnl-table">
+        <thead>
+          <tr>
+            <th class="pnl-th-check"><input type="checkbox" id="pnl-check-all-ord" onchange="pnlToggleAllOrd(this)"/></th>
+            <th>Ticket</th><th>Symbol</th><th>Type</th><th>Volume</th>
+            <th>Price</th><th>SL</th><th>TP</th><th>Comment</th><th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="pnl-ord-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="pnl-action-status" id="pnl-action-status"></div>
+
+</div><!-- /#pg-pnl -->

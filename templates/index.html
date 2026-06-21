@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ArbTrader</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/arbtrader.css') }}" />
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- ══════════════════════════════════
+       LEFT SIDEBAR — persistent accounts
+  ══════════════════════════════════ -->
+  <aside class="sidebar">
+
+    <div class="sidebar-logo">Arb<span>Trader</span></div>
+    <div class="sidebar-sub">Gold &amp; Silver · Arb</div>
+
+    <!-- Login form -->
+    <div class="sb-section-title">Add Account</div>
+    <div class="acc-login-card">
+      <div class="acc-field">
+        <label>Account No.</label>
+        <input type="text" id="ex-account" placeholder="e.g. 89114" autocomplete="off" />
+      </div>
+      <div class="acc-field">
+        <label>Password</label>
+        <input type="password" id="ex-password" placeholder="MT5 password" />
+      </div>
+      <div class="acc-field">
+        <label>Server</label>
+        <input type="text" id="ex-server" placeholder="e.g. FinoTrax-Live" autocomplete="off" />
+      </div>
+      <div class="acc-field">
+        <label>Label <span class="acc-optional">(optional)</span></label>
+        <input type="text" id="ex-label" placeholder="e.g. DG Main" autocomplete="off" />
+      </div>
+      <div class="acc-login-status" id="ex-login-status"></div>
+      <button class="acc-login-btn" id="ex-login-btn" onclick="execLogin()">Connect account</button>
+    </div>
+
+    <!-- Saved accounts -->
+    <div class="sb-section-title" style="margin-top:14px">
+      Saved Accounts
+      <span class="sb-acc-count" id="sb-acc-count">0</span>
+    </div>
+
+    <div class="acc-select-row">
+      <select id="ex-acc-select">
+        <option value="">— choose —</option>
+      </select>
+      <button class="acc-connect-saved-btn" onclick="execConnectSaved()">Connect</button>
+    </div>
+    <div class="acc-login-status" id="ex-saved-status"></div>
+
+    <!-- Account cards -->
+    <div class="acc-list" id="ex-acc-list"></div>
+
+    <!-- Active account indicator -->
+    <div class="sb-active-acc" id="sb-active-acc" style="display:none">
+      <div class="sb-active-dot"></div>
+      <div>
+        <div class="sb-active-name" id="sb-active-name">—</div>
+        <div class="sb-active-bal"  id="sb-active-bal">—</div>
+      </div>
+    </div>
+
+    <!-- Clock + rate at bottom -->
+    <div class="sidebar-footer">
+      <div class="sf-rate">
+        <span class="rate-label">USD/INR</span>
+        <span class="rate-bid">94.51</span>
+        <span class="rate-sep">/</span>
+        <span class="rate-ask">94.53</span>
+      </div>
+      <div class="topbar-clock" id="clk"></div>
+    </div>
+
+  </aside><!-- /.sidebar -->
+
+  <!-- ══════════════════════════════════
+       RIGHT PANE — topbar + pages
+  ══════════════════════════════════ -->
+  <div class="main-pane">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="nav-tabs">
+        <button class="ntab active" onclick="show('disparity',this)">Disparity</button>
+        <button class="ntab"        onclick="show('execute',this)">Execute</button>
+        <button class="ntab"        onclick="show('pnl',this)">Live P&amp;L</button>
+        <button class="ntab"        onclick="show('limits',this)">Summary</button>
+        <button class="ntab"        onclick="show('accounts',this)">History</button>
+      </div>
+    </div>
+
+    <!-- Pages -->
+    <div class="pages-wrap">
+      {% include "partials/disparity.html" %}
+      {% include "partials/execute.html" %}
+      {% include "partials/pnl.html" %}
+      {% include "partials/limits.html" %}
+      {% include "partials/accounts.html" %}
+    </div>
+
+  </div><!-- /.main-pane -->
+
+</div><!-- /.app-shell -->
+
+<!-- ── Connection modal ── -->
+<div class="modal-overlay" id="conn-modal" onclick="closeConnectOutside(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modal-title">Connect</div>
+        <div class="modal-sub"   id="modal-sub"></div>
+      </div>
+      <button class="modal-close" onclick="closeConnect()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="mfield">
+        <label>Account number</label>
+        <input type="text"     id="f-account"  placeholder="e.g. 89114" autocomplete="off" />
+      </div>
+      <div class="mfield">
+        <label>Password</label>
+        <input type="password" id="f-password" placeholder="MT5 password" />
+      </div>
+      <div class="mfield">
+        <label>Server</label>
+        <input type="text"     id="f-server"   placeholder="e.g. FinoTrax-Live" autocomplete="off" />
+      </div>
+      <div class="modal-status" id="modal-status"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="mbtn-cancel"  onclick="closeConnect()">Cancel</button>
+      <button class="mbtn-connect" id="modal-connect-btn" onclick="doConnect()">Connect</button>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/arbtrader.js') }}"></script>
+</body>
+</html>

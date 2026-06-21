@@ -1,0 +1,54 @@
+<!-- ── SCREEN 5: HISTORY ── -->
+<div class="page" id="pg-accounts">
+
+  <div class="hist-topbar">
+    <div class="sum-acc-badge" id="hist-acc-badge">No account selected</div>
+    <div class="hist-date-row">
+      <div class="hist-date-group">
+        <label>From</label>
+        <input type="date" id="hist-date-from" onchange="histLoad(1)" />
+      </div>
+      <div class="hist-date-group">
+        <label>To</label>
+        <input type="date" id="hist-date-to" onchange="histLoad(1)" />
+      </div>
+      <button class="sum-refresh-btn" onclick="histClearDates()">Clear</button>
+    </div>
+    <button class="hist-sync-btn" onclick="histSync()" id="hist-sync-btn">↓ Sync from MT5</button>
+  </div>
+
+  <div class="sum-placeholder" id="hist-placeholder">No account selected — connect one in the sidebar</div>
+
+  <div id="hist-content" style="display:none">
+
+    <div class="hist-meta" id="hist-meta"></div>
+
+    <div class="pnl-table-wrap">
+      <table class="pnl-table" id="hist-table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Ticket</th>
+            <th>Symbol</th>
+            <th>Type</th>
+            <th>Entry</th>
+            <th>Volume</th>
+            <th>Price</th>
+            <th>Commission</th>
+            <th>Swap</th>
+            <th>P&L</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody id="hist-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="hist-pagination" id="hist-pagination"></div>
+
+  </div><!-- /#hist-content -->
+
+  <div class="pnl-action-status" id="hist-status"></div>
+
+</div><!-- /#pg-accounts -->
